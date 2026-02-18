@@ -1,0 +1,14 @@
+{
+  "name": "hiero-plugin-camp",
+  "version": "0.1.0",
+  "description": "Hiero CLI plugin — camp workspace management for Hedera developers",
+  "main": "src/index.js",
+  "hiero": {
+    "type": "plugin",
+    "commands": ["camp"]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT"
+}
