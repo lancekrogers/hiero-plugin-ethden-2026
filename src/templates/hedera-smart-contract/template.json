@@ -1,0 +1,7 @@
+{
+  "id": "hedera-smart-contract",
+  "name": "Hedera Smart Contract",
+  "description": "Solidity + Hardhat project pre-configured for Hedera network deployment",
+  "language": "TypeScript/Solidity",
+  "tags": ["solidity", "hardhat", "smart-contract", "evm"]
+}

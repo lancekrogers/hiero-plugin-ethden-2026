@@ -1,6 +1,5 @@
 import { CommandHandlerArgs } from '../types';
 
-// Mock camp module before importing handlers
 const mockExecCamp = jest.fn();
 jest.mock('../camp', () => ({
   execCamp: (...args: any[]) => mockExecCamp(...args),
@@ -10,6 +9,31 @@ jest.mock('../camp', () => ({
       this.name = 'CampNotFoundError';
     }
   },
+}));
+
+jest.mock('../registry', () => ({
+  getTemplate: jest.fn((id: string) => {
+    const templates: Record<string, any> = {
+      'hedera-smart-contract': { id: 'hedera-smart-contract', name: 'Hedera Smart Contract' },
+      'hedera-dapp': { id: 'hedera-dapp', name: 'Hedera dApp' },
+      'hedera-agent': { id: 'hedera-agent', name: 'Hedera Agent' },
+    };
+    return templates[id] ?? undefined;
+  }),
+  listTemplates: jest.fn(() => [
+    { id: 'hedera-smart-contract' },
+    { id: 'hedera-dapp' },
+    { id: 'hedera-agent' },
+  ]),
+  templateExists: jest.fn(() => false),
+  buildVariables: jest.fn((name: string) => ({
+    projectName: name,
+    projectNamePascal: 'MyApp',
+    description: 'A Hedera project',
+    author: 'Developer',
+    year: '2026',
+  })),
+  copyTemplate: jest.fn(),
 }));
 
 import { initHandler } from '../commands/init';
@@ -41,8 +65,9 @@ describe('initHandler', () => {
   });
 
   it('calls camp init with name on success', async () => {
+    // camp init
     mockExecCamp.mockResolvedValueOnce({ exitCode: 0, stdout: 'ok', stderr: '' });
-    // config set call
+    // camp config set
     mockExecCamp.mockResolvedValueOnce({ exitCode: 0, stdout: '', stderr: '' });
 
     const result = await initHandler(makeMockArgs({ name: 'my-app' }));
@@ -62,14 +87,10 @@ describe('initHandler', () => {
     expect(mockExecCamp).toHaveBeenCalledWith(['init', 'my-app', '--template', 'hedera-dapp']);
   });
 
-  it('warns on unknown template but proceeds', async () => {
-    mockExecCamp.mockResolvedValueOnce({ exitCode: 0, stdout: 'ok', stderr: '' });
-    mockExecCamp.mockResolvedValueOnce({ exitCode: 0, stdout: '', stderr: '' });
-
-    const args = makeMockArgs({ name: 'my-app', template: 'custom-tmpl' });
-    const result = await initHandler(args);
-    expect(result.status).toBe('success');
-    expect(args.logger.warn).toHaveBeenCalled();
+  it('returns failure on unknown template', async () => {
+    const result = await initHandler(makeMockArgs({ name: 'my-app', template: 'custom-tmpl' }));
+    expect(result.status).toBe('failure');
+    expect(result.errorMessage).toContain('Unknown template');
   });
 
   it('returns failure on camp init error', async () => {
@@ -85,6 +106,7 @@ describe('statusHandler', () => {
   beforeEach(() => jest.clearAllMocks());
 
   it('returns project list and status on success', async () => {
+    // Promise.all: [project list, status]
     mockExecCamp.mockResolvedValueOnce({
       exitCode: 0,
       stdout: 'project-a\nproject-b\n',
@@ -147,9 +169,7 @@ describe('navigateHandler', () => {
   });
 
   it('falls back to fuzzy finder when navigate not supported', async () => {
-    // camp navigate fails (not supported)
     mockExecCamp.mockRejectedValueOnce(new Error('unknown command'));
-    // project list succeeds
     mockExecCamp.mockResolvedValueOnce({
       exitCode: 0,
       stdout: 'project-alpha\nproject-beta\n',

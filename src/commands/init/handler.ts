@@ -1,7 +1,6 @@
 import { CommandHandlerArgs, CommandExecutionResult } from '../../types';
 import { execCamp } from '../../camp';
-
-const HEDERA_TEMPLATES = ['hedera-smart-contract', 'hedera-dapp', 'hedera-agent'];
+import { getTemplate, listTemplates, buildVariables, copyTemplate, templateExists } from '../../registry';
 
 export async function initHandler(
   args: CommandHandlerArgs
@@ -17,12 +16,22 @@ export async function initHandler(
     };
   }
 
-  if (template && !HEDERA_TEMPLATES.includes(template)) {
-    args.logger.warn(
-      `'${template}' is not a known Hedera template. Available: ${HEDERA_TEMPLATES.join(', ')}. Proceeding anyway.`
-    );
+  // Validate template if specified
+  if (template) {
+    const tmpl = getTemplate(template);
+    if (!tmpl) {
+      const available = listTemplates().map((t) => t.id).join(', ');
+      return {
+        status: 'failure',
+        errorMessage: `Unknown template '${template}'. Available templates: ${available}`,
+      };
+    }
+    if (!templateExists(template)) {
+      args.logger.warn(`Template '${template}' metadata exists but files are missing.`);
+    }
   }
 
+  // Invoke camp init
   const campArgs = ['init', name];
   if (template) {
     campArgs.push('--template', template);
@@ -37,6 +46,18 @@ export async function initHandler(
     };
   }
 
+  // Apply Hedera template if specified and template files exist
+  let appliedTemplate: string | null = null;
+  if (template && templateExists(template)) {
+    try {
+      const vars = buildVariables(name);
+      copyTemplate(template, name, vars);
+      appliedTemplate = template;
+    } catch (err) {
+      args.logger.warn(`Template application failed: ${err}. Workspace created without template.`);
+    }
+  }
+
   // Configure Hedera testnet defaults
   try {
     await execCamp(['config', 'set', 'network', 'hedera-testnet'], { cwd: name });
@@ -48,7 +69,7 @@ export async function initHandler(
     status: 'success',
     outputJson: JSON.stringify({
       workspace: name,
-      template: template ?? 'default',
+      template: appliedTemplate ?? template ?? 'default',
       network: 'hedera-testnet',
       message: `Workspace '${name}' initialized. Default network: Hedera Testnet.`,
       nextSteps: [`cd ${name}`, 'hcli camp status'],

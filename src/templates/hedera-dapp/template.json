@@ -1,0 +1,7 @@
+{
+  "id": "hedera-dapp",
+  "name": "Hedera dApp",
+  "description": "React + Vite dApp with HashConnect wallet integration",
+  "language": "TypeScript/React",
+  "tags": ["react", "vite", "hashconnect", "dapp", "frontend"]
+}

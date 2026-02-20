@@ -1,0 +1,7 @@
+{
+  "id": "hedera-agent",
+  "name": "Hedera Agent",
+  "description": "Go agent with HCS and HTS integration via Hedera SDK",
+  "language": "Go",
+  "tags": ["go", "agent", "hcs", "hts", "consensus", "token"]
+}
