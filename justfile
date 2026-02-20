@@ -4,8 +4,17 @@
 install:
     npm install
 
+build:
+    npx tsc
+
 dev:
-    node src/index.js
+    npx tsc --watch
+
+lint:
+    npx tsc --noEmit
 
 test:
     npm test
+
+clean:
+    rm -rf dist

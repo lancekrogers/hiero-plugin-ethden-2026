@@ -1,14 +1,30 @@
 {
   "name": "hiero-plugin-camp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Hiero CLI plugin — camp workspace management for Hedera developers",
-  "main": "src/index.js",
-  "hiero": {
-    "type": "plugin",
-    "commands": ["camp"]
-  },
+  "main": "dist/manifest.js",
+  "types": "dist/manifest.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "tsc --noEmit"
   },
-  "license": "MIT"
+  "keywords": [
+    "hiero",
+    "hiero-plugin",
+    "hedera",
+    "camp",
+    "workspace"
+  ],
+  "author": "ETHDenver 2026 Team",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.3.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
+  }
 }

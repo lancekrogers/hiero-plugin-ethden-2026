@@ -1,0 +1,1 @@
+export { navigateHandler } from './handler';
