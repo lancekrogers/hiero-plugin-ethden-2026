@@ -83,6 +83,26 @@ just dev        # Watch mode
 
 See [docs/architecture.md](docs/architecture.md) for design decisions and component overview.
 
+## Hedera Track 4 Alignment
+
+This project targets the **Hedera Track 4: Developer Tooling** ($5k) bounty.
+
+| Requirement | Implementation |
+|-------------|----------------|
+| Extends Hiero ecosystem | Plugin for the official Hiero CLI via `plugin-management add` |
+| Developer productivity | Three scaffold templates eliminate boilerplate for common Hedera patterns |
+| Workspace management | `init`, `status`, and `navigate` commands for multi-project Hedera workspaces |
+| Template variety | Smart contract (Solidity/Hardhat), dApp (React/HashConnect), Agent (Go/HCS/HTS) |
+| Production quality | 37 passing tests, TypeScript throughout, modular command architecture |
+| Documentation | Usage guide, architecture doc, and template design notes included |
+
+### What Developers Get
+
+1. **`hcli camp init --template hedera-dapp`**: Scaffolds a complete React + Vite + HashConnect dApp with Hedera testnet config in seconds
+2. **`hcli camp init --template hedera-agent`**: Scaffolds a Go agent with HCS topic messaging and HTS token operations pre-wired
+3. **`hcli camp status`**: See all projects in a workspace at a glance
+4. **`hcli camp navigate`**: Fuzzy-find jump to any project in the workspace
+
 ## License
 
 MIT
