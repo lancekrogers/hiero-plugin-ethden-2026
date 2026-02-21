@@ -85,4 +85,4 @@ See [docs/architecture.md](docs/architecture.md) for design decisions and compon
 
 ## License
 
-Apache-2.0
+MIT
