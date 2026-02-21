@@ -2,11 +2,19 @@
 
 Hiero CLI plugin for camp workspace management -- Hedera developer tooling.
 
+Part of the [ETHDenver 2026 Agent Economy](../README.md) submission.
+
 ## Overview
 
 hiero-plugin-camp extends the [Hiero CLI](https://github.com/hiero-ledger/hiero-cli) with workspace management commands under the `hcli camp` namespace. It wraps the `camp` binary to provide Hedera-specific project initialization, status reporting, and workspace navigation, bundling three scaffold templates for common Hedera development patterns.
 
 Built for **Hedera Track 4** at ETHDenver 2026.
+
+### Built with Obedience Corp
+
+This project is part of an [Obedience Corp](https://obediencecorp.com) campaign — built and planned using **camp** (campaign management) and **fest** (festival methodology). This repository, its git history, and the planning artifacts in `festivals/` are a live example of these tools in action.
+
+The plugin wraps the **camp** binary directly, bringing Obedience Corp's campaign workspace management into the Hiero CLI ecosystem.
 
 ## Quick Start
 
