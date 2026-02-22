@@ -1,0 +1,17 @@
+@default:
+    just --list --justfile {{source_file()}}
+
+build:
+    go build -o bin/mint ./cmd/mint
+
+run: build
+    ./bin/mint
+
+test:
+    go test ./...
+
+lint:
+    go vet ./...
+
+clean:
+    rm -rf bin/

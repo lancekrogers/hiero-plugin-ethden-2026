@@ -36,6 +36,20 @@ const TEMPLATES: TemplateMetadata[] = [
     language: 'Go',
     tags: ['go', 'agent', 'hcs', 'hts', 'consensus', 'token'],
   },
+  {
+    id: '0g-agent',
+    name: '0G Agent',
+    description: 'Go agent with 0G Compute, Storage, and EVM chain integration',
+    language: 'Go',
+    tags: ['go', 'agent', '0g', 'compute', 'storage', 'evm'],
+  },
+  {
+    id: '0g-inft-build',
+    name: '0G iNFT Builder',
+    description: 'ERC-7857 iNFT minter with AES-256-GCM encryption and 0G DA storage',
+    language: 'Go',
+    tags: ['go', '0g', 'inft', 'erc7857', 'da', 'nft'],
+  },
 ];
 
 export function listTemplates(): TemplateMetadata[] {

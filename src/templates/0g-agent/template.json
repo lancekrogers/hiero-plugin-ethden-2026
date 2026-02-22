@@ -1,0 +1,7 @@
+{
+  "id": "0g-agent",
+  "name": "0G Agent",
+  "description": "Go agent with 0G Compute, Storage, and EVM chain integration",
+  "language": "Go",
+  "tags": ["go", "agent", "0g", "compute", "storage", "evm"]
+}

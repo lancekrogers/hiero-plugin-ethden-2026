@@ -1,0 +1,17 @@
+@default:
+    just --list --justfile {{source_file()}}
+
+build:
+    go build -o bin/agent ./cmd/agent
+
+run: build
+    ./bin/agent
+
+test:
+    go test ./...
+
+lint:
+    go vet ./...
+
+clean:
+    rm -rf bin/
