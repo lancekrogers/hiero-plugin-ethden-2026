@@ -69,3 +69,24 @@ All three handlers follow the same pattern:
 | Fuzzy fallback in navigate | camp may not support navigate natively; built-in fallback provides consistent UX |
 | Templates as static files | Simple, no build step needed; variable substitution is straightforward regex |
 | tsconfig excludes templates | Template files contain JSX, Go, Solidity -- not valid plugin TypeScript |
+
+## Bundled Templates
+
+### Hedera Templates
+
+| Template ID | Language | Description |
+|-------------|----------|-------------|
+| `hedera-smart-contract` | TypeScript/Solidity | Hardhat project pre-configured for Hedera testnet |
+| `hedera-dapp` | TypeScript/React | React + Vite dApp with HashConnect wallet |
+| `hedera-agent` | Go | Agent with HCS topic messaging and HTS token queries |
+
+### 0G Templates
+
+| Template ID | Language | Description |
+|-------------|----------|-------------|
+| `0g-agent` | Go | Agent with 0G Compute broker, Storage client, and EVM chain integration |
+| `0g-inft-build` | Go | ERC-7857 iNFT minter with AES-256-GCM encryption and 0G DA storage |
+
+**0g-agent structure**: `cmd/agent/main.go` wires config, chain client (`go-ethereum`), ComputeBroker, and StorageClient into a poll loop. Internal packages: `config/`, `zerog/` (chain.go, compute.go, storage.go).
+
+**0g-inft-build structure**: `cmd/mint/main.go` orchestrates encrypt-model -> publish-to-DA -> mint-iNFT flow. Internal packages: `config/`, `crypto/` (AES-256-GCM), `da/` (publisher), `inft/` (ABI loader, minter via `bind.BoundContract`).

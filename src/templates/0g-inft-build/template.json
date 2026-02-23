@@ -1,0 +1,7 @@
+{
+  "id": "0g-inft-build",
+  "name": "0G iNFT Builder",
+  "description": "ERC-7857 iNFT minter with AES-256-GCM encryption and 0G DA storage",
+  "language": "Go",
+  "tags": ["go", "0g", "inft", "erc7857", "da", "nft"]
+}

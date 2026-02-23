@@ -18,9 +18,14 @@ hcli camp init --name my-project --template hedera-dapp
 
 ### Available Templates
 
+**Hedera:**
 - **hedera-smart-contract** -- Solidity + Hardhat with Hedera testnet JSON-RPC relay (chain ID 296)
 - **hedera-dapp** -- React + Vite + HashConnect for building Hedera dApps
 - **hedera-agent** -- Go agent with HCS topic messaging and HTS token queries
+
+**0G:**
+- **0g-agent** -- Go agent with 0G Compute, Storage, and EVM chain integration
+- **0g-inft-build** -- ERC-7857 iNFT minter with AES-256-GCM encryption and 0G DA storage
 
 ### Post-Init Steps
 
@@ -122,6 +127,28 @@ hcli camp init --name my-agent --template hedera-agent
 cd my-agent
 cp .env.example .env
 # Add your Hedera testnet credentials to .env
+go mod tidy
+just run
+```
+
+### New 0G Compute/Storage Agent
+
+```bash
+hcli camp init --name my-0g-agent --template 0g-agent
+cd my-0g-agent
+cp .env.example .env
+# Add your 0G testnet credentials (ZG_RPC_URL, ZG_PRIVATE_KEY, etc.)
+go mod tidy
+just run
+```
+
+### New 0G iNFT Builder
+
+```bash
+hcli camp init --name my-inft --template 0g-inft-build
+cd my-inft
+cp .env.example .env
+# Add your 0G testnet credentials + contract address + encryption key
 go mod tidy
 just run
 ```

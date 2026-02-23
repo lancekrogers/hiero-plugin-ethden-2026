@@ -68,6 +68,8 @@ See [docs/usage-guide.md](docs/usage-guide.md) for detailed usage examples.
 | `hedera-smart-contract` | TypeScript/Solidity | Hardhat project with Hedera testnet JSON-RPC config |
 | `hedera-dapp` | TypeScript/React | Vite + React app with HashConnect wallet integration |
 | `hedera-agent` | Go | Agent with HCS messaging and HTS token operations |
+| `0g-agent` | Go | 0G Compute inference agent with session auth and DA |
+| `0g-inft-build` | Solidity/Go | ERC-7857 iNFT minting with encrypted metadata on 0G Chain |
 
 ## Development
 

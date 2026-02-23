@@ -17,6 +17,8 @@ jest.mock('../registry', () => ({
       'hedera-smart-contract': { id: 'hedera-smart-contract', name: 'Hedera Smart Contract' },
       'hedera-dapp': { id: 'hedera-dapp', name: 'Hedera dApp' },
       'hedera-agent': { id: 'hedera-agent', name: 'Hedera Agent' },
+      '0g-agent': { id: '0g-agent', name: '0G Agent' },
+      '0g-inft-build': { id: '0g-inft-build', name: '0G iNFT Build' },
     };
     return templates[id] ?? undefined;
   }),
@@ -24,6 +26,8 @@ jest.mock('../registry', () => ({
     { id: 'hedera-smart-contract' },
     { id: 'hedera-dapp' },
     { id: 'hedera-agent' },
+    { id: '0g-agent' },
+    { id: '0g-inft-build' },
   ]),
   templateExists: jest.fn(() => false),
   buildVariables: jest.fn((name: string) => ({
@@ -85,6 +89,15 @@ describe('initHandler', () => {
 
     await initHandler(makeMockArgs({ name: 'my-app', template: 'hedera-dapp' }));
     expect(mockExecCamp).toHaveBeenCalledWith(['init', 'my-app', '--template', 'hedera-dapp']);
+  });
+
+  it('passes 0g-agent template flag to camp init', async () => {
+    mockExecCamp.mockResolvedValueOnce({ exitCode: 0, stdout: 'ok', stderr: '' });
+    mockExecCamp.mockResolvedValueOnce({ exitCode: 0, stdout: '', stderr: '' });
+
+    const result = await initHandler(makeMockArgs({ name: 'my-0g-app', template: '0g-agent' }));
+    expect(result.status).toBe('success');
+    expect(mockExecCamp).toHaveBeenCalledWith(['init', 'my-0g-app', '--template', '0g-agent']);
   });
 
   it('returns failure on unknown template', async () => {
